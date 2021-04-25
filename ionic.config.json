@@ -1,5 +1,11 @@
 {
   "name": "api",
   "integrations": {},
-  "type": "angular"
+  "type": "angular",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://api.currentsapi"
+    }
+  ]
 }

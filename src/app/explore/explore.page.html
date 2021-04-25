@@ -1,0 +1,11 @@
+<app-header title="Colombia News"></app-header>
+
+<ion-content color="dark">
+
+  <app-noticias [noticias] = "noticiasScroll"></app-noticias>
+
+  <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

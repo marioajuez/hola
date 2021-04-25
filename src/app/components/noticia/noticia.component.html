@@ -1,0 +1,27 @@
+<ion-card color="dark">
+
+  <div style="position: relative;">
+    <ion-img (click)="abrirNoticia()" class="fade-in" [src]=noticia.image></ion-img>
+  </div>
+  <ion-card-header>
+    <ion-card-title (click)="abrirNoticia()">
+      {{noticia.title}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <!-- <p>{{noticia.description}}</p> -->
+    <ion-text>{{noticia.description}}</ion-text>
+  </ion-card-content>
+  <div style="display:flex; flex-wrap: wrap;justify-content: space-between;">
+    <div style="display:flex;justify-content: center;align-items: center; margin-left: 20px; flex:1">
+      <span class="text-primary" style="margin-right: 5px;">{{ indice + 1 }}.</span>
+      <span class="noticia-source-name">
+        {{noticia.author}}
+      </span>
+    </div>
+
+    <ion-button fill="clear" (click)="lanzarMenu()" class="" style="margin:0">
+      <ion-icon name="ellipsis-vertical" color="light"></ion-icon>
+    </ion-button>
+  </div>
+</ion-card>
