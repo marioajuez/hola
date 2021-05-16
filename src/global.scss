@@ -43,14 +43,13 @@ ion-segment-button{
     --color-checked: var(--ion-color-danger);
 }
 
-// ion-tab-button{
-//     // --color-selected: #ffc409;
-//     --ion-color-contrast: var(--ion-color-danger);
-// }
-
-.tab-selected{
-    color:var(--ion-color-danger); 
+ion-tab-button{
+    --ion-color-contrast: var(--ion-color-light);
 }
+
+// .tab-selected{
+//     color:var(--ion-color-danger); 
+// }
 
 
 
@@ -72,6 +71,14 @@ ion-segment-button{
     &::after{
             background-color: var(--ion-color-dark) !important;
         }
+}
+
+.content-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
 }
 
 // Animaciones

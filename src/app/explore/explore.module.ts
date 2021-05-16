@@ -9,6 +9,10 @@ import { ExplorePageRoutingModule } from './explore-routing.module';
 import { ExplorePage } from './explore.page';
 import { ComponentsModule } from '../components/components.module';
 
+// import { IonicTabSliderModule } from 'ionic-module-template';
+
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +20,7 @@ import { ComponentsModule } from '../components/components.module';
     IonicModule,
     ExplorePageRoutingModule,
     ComponentsModule
+    // IonicTabSliderModule // Import this module here
   ],
   declarations: [ExplorePage]
 })

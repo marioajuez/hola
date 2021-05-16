@@ -1,5 +1,42 @@
-<app-header title="Categorias"><app-header>
 
-<ion-content>
+<ion-header class="ion-no-border">
+  <app-header title="Encabezados"></app-header>
+</ion-header>
 
-</ion-content>
+
+
+<super-tabs #tabs (tabChange) = "onTabSelect($event)" 
+[config]="{ lazyLoad: true, unloadWhenInvisible: true,  debug: true, nativeSmoothScroll: true }">
+ 
+  <super-tabs-toolbar slot="top" scrollable>
+    <super-tab-button *ngFor="let categoria of categorias">
+      <ion-label>
+        {{ categoria.name }}
+      </ion-label>
+    </super-tab-button>
+
+  </super-tabs-toolbar>
+  <super-tabs-container  	swipe-enabled ="true">
+    <super-tab *ngFor="let categoria of categorias; let i=index">
+  
+      <ion-content class="ion-padding" color="dark">
+        <div *ngIf="noticiasService.spinners[i] | async" class="content-center">
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+      
+        <div class="content-center" *ngIf="!(noticiasService.spinners[i] | async) && categoria.data.length == 0">
+          <ion-icon name="sad" class="ion-padding-vertical"></ion-icon>
+          <ion-text class="ion-text-center">En el momento, no se encontraron noticias en esta categoria</ion-text>
+        </div> 
+        <ion-button (click)="ver()">ver</ion-button>
+        <ng-container *ngIf="!(noticiasService.spinners[i] | async) && categoria.data.length != 0">
+          <app-noticias [noticias] = "categoria.data"></app-noticias>
+          <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event,categoria.name)">
+            <ion-infinite-scroll-content loadingSpinner="crescent">
+            </ion-infinite-scroll-content>
+          </ion-infinite-scroll>  
+        </ng-container>
+      </ion-content> 
+    </super-tab>
+  </super-tabs-container>
+</super-tabs>

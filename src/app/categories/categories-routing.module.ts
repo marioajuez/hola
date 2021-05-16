@@ -4,10 +4,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { CategoriesPage } from './categories.page';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: '/home/categories/technology',
+  //   pathMatch: 'full'
+  // },
   {
     path: '',
-    component: CategoriesPage
-  }
+    component: CategoriesPage,
+
+  },
+
 ];
 
 @NgModule({
