@@ -25,7 +25,6 @@ const apiKey2 = '3ce4bc4186834f66b686ddb48b27f7d1';
   providedIn: 'root',
 })
 export class NoticiasService {
-  someDataObservable: Observable<any>;
 
   spinners =[
     new BehaviorSubject<boolean>(true),
@@ -36,9 +35,6 @@ export class NoticiasService {
     new BehaviorSubject<boolean>(true),
   ]
 
-
-  // public isLoading_: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  // isLoading = new Subject<boolean>();
 
   public categoriaPage = 179;
 
@@ -69,19 +65,20 @@ export class NoticiasService {
 
     const req  = `https://newsapi.org/v2/top-headlines?country=co&apiKey=${apiKey2}&page=${this.categoriaPage}&category=${categoria}`;
     return this.httpClient.get<RespuestaHeadLines>(req);
-    // console.log(categoria);
-
   }
 
-  getCat( cat: string, indiceCategoria){
+  getCategorias( cat: string, indiceCategoria, page?){
+    // page = this.categoriaPage
 
-    // this.isLoading_.next(true);
 
-    const req  = `https://api.currentsapi.services/v1/latest-news?language=es&apiKey=${apiKey}&category=${cat}&page_number=${this.categoriaPage}&country =co`;
-    return this.httpClient.get<any>(req).pipe(
+    // console.log(this.categoriaPage, "SERVICES");
+    console.log(page, "SERVICES");
+
+    const req  = `https://api.currentsapi.services/v1/latest-news?language=es&apiKey=${apiKey}&category=${cat}&page_number=${page}&country =co`;
+    return this.httpClient.get<RespuestaHeadLines>(req).pipe(
           finalize(
             () => {
-              this.spinners[indiceCategoria].next(false)
+              this.spinners[indiceCategoria].next(false);
             })
     )
   }

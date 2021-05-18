@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { NoticiasService } from '../providers/noticias.service';
+
 import { Article } from '../interfaces/noticias.interface';
 
 @Component({
@@ -9,58 +10,28 @@ import { Article } from '../interfaces/noticias.interface';
 })
 export class ExplorePage implements OnInit {
 
-  public tabs = [
-    {
-      name: 'Tab heading 1',
-      img:'https://www.gstatic.com/webp/gallery3/2_webp_ll.png'
-    },
-    {
-      name: 'Tab heading 2',
-      img:'https://www.gstatic.com/webp/gallery3/2_webp_ll.png'
-    },
-    {
-      name: 'Tab heading 3',
-      img:'https://www.gstatic.com/webp/gallery3/2_webp_ll.png'
-    },
-    {
-      name: 'Tab heading 4',
-      img:'https://www.gstatic.com/webp/gallery3/2_webp_ll.png'
-    }
-  ]
-  public screenWidth: any;
-  public screenHeight: any;
   private noticias: Article[] = [];
-  private show_card = 3;
-  private indice = 0;
-  private indice2 = this.show_card;
-  private pagina = 0;
-  // private
-  private noticiasScroll: Article[] = [];
-  tests:any;
+
   constructor(private noticiasService: NoticiasService) {}
 
 
   ngOnInit() {
-    // this.screenWidth = window.innerWidth;
-    // this.screenHeight = window.innerHeight;
-    this.tests = '123';
-    // console.log(this.screenWidth,this.screenHeight);
-    // this.cargarNoticias();
+ 
+    this.cargarNoticias();
   }
  
   
-  test($event){
-   console.log('$event :', $event);
-  }
-
   loadData(event) {
-    this.indice += this.show_card;
-    this.indice2 += this.show_card;
-
     this.cargarNoticias(event);
   }
 
   cargarNoticias(event?, categoria?) {
+
+    const resp = this.noticiasService.getNoticias3();
+
+
+    console.log(resp);
+
 
 
     // this.noticiasService.getNoticias2().subscribe((resp) => {
@@ -85,10 +56,4 @@ export class ExplorePage implements OnInit {
     // });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight;
-    // console.log(this.screenHeight,this.screenWidth );
-  }
 }

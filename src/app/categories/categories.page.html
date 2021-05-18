@@ -28,8 +28,9 @@
           <ion-icon name="sad" class="ion-padding-vertical"></ion-icon>
           <ion-text class="ion-text-center">En el momento, no se encontraron noticias en esta categoria</ion-text>
         </div> 
-        <ion-button (click)="ver()">ver</ion-button>
+        <!-- <ion-button (click)="ver()">ver</ion-button> -->
         <ng-container *ngIf="!(noticiasService.spinners[i] | async) && categoria.data.length != 0">
+          <!-- <ng-container> -->
           <app-noticias [noticias] = "categoria.data"></app-noticias>
           <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event,categoria.name)">
             <ion-infinite-scroll-content loadingSpinner="crescent">

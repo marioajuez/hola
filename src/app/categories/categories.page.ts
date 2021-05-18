@@ -13,17 +13,17 @@ import { LoaderService } from '../providers/loader.service';
   styleUrls: ['./categories.page.scss'],
 })
 export class CategoriesPage implements OnInit {
-  categoriaPage = this.noticiasService.categoriaPage + 1;
+  categoriaPage = this.noticiasService.categoriaPage;
 
   categorias = [
     // { name: 'business', data: [], active: true, page: this.categoriaPage },
     // { name: 'sports', data: [], active: false, page: this.categoriaPage },
     // { name: 'general', data: [], active: false, page: this.categoriaPage },
-    { name: 'regional', data: [], active: true, page: this.categoriaPage },
-    { name: 'technology', data: [], active: false, page: this.categoriaPage },
-    { name: 'lifestyle', data: [], active: false, page: this.categoriaPage },
+    { name: 'regional', data: [], active: true, page: this.categoriaPage},
+    { name: 'technology', data: [], active: false, page: 177},
+    { name: 'lifestyle', data: [], active: false, page: 178 },
     { name: 'business', data: [], active: false, page: this.categoriaPage },
-    { name: 'general', data: [], active: false, page: this.categoriaPage },
+    { name: 'general', data: [], active: false, page: 178},
     { name: 'programming', data: [], active: false, page: this.categoriaPage },
     // { name: 'science', data: [], active: false, page: this.categoriaPage },
     // {
@@ -77,7 +77,6 @@ export class CategoriesPage implements OnInit {
   constructor(
     public noticiasService: NoticiasService,
     private router: Router,
-    // public loaderService: LoaderService
   ) {}
 
   ngOnInit() {
@@ -88,37 +87,79 @@ export class CategoriesPage implements OnInit {
 
     this.indiceCategoria = event.detail.index;
 
-    if (this.categorias[event.detail.index].active == false) {
-        this.categorias[event.detail.index].active = true;
-        this.cargarNoticias(this.categorias[event.detail.index].name);
-    }
+
+    this.categorias.forEach ( (element, index) =>{
+
+      if(element.active == false && index == event.detail.index){
+        this.cargarNoticias(element.name);
+        element.active = true
+      }
+    })
+
+    // if (this.categorias[event.detail.index].active == false) {
+    //     this.categorias[event.detail.index].active = true;
+    //     this.cargarNoticias(this.categorias[event.detail.index].name);
+    // }
   }
 
   cargarNoticias(categoria?, event?) {
-    this.noticiasService.getCat(categoria,this.indiceCategoria).subscribe((resp) => {
+     
+    this.noticiasService.getCategorias(categoria,this.indiceCategoria, this.categorias[this.indiceCategoria].page ).subscribe(
+    resp => {
       try {
         this.categorias.forEach( element =>{
-        if(element.name == categoria){
 
-          if (element.page > 180 || resp.news.length == 0 && element.data.length != 0){
+          if(element.name == categoria){
+
+          if (element.page+1 > 180 || resp.news.length == 0 && element.data.length != 0){
                  event.target.disabled = true;
           }
-            element.data.push(...resp.news);
+          
 
+
+          element.data.push(...resp.news);
           if (event) {
               event.target.complete();
-            }
+          }
         }
       })
       } catch (err) {
         console.error(err);
       }
-    });
+    },
+    error =>{
+        console.log(error ,"There was an error in receiving data from server!', 'OK', 'error");
+      }
+    )
+    
   }
 
   loadData(event?, categoria?) {
-      this.noticiasService.categoriaPage = this.categorias[this.indiceCategoria].page++;
-      this.cargarNoticias(categoria, event);
+
+    // this.categorias.forEach( element =>{
+
+    //   if(element.name == categoria){
+    //     this.noticiasService.categoriaPage = element.page++;
+    //     this.cargarNoticias(element.name, event);
+    //   }
+    // })
+    // console.log(categoria);
+
+    // this.noticiasService.categoriaPage = 0;
+    // this.categorias.forEach( (element,index) =>{
+
+    //   if(element.name == categoria && index == this.indiceCategoria){
+    //     // element.page++;
+    //     this.noticiasService.categoriaPage = element.page++;
+    //     this.cargarNoticias(element.name, event);
+        
+    //   }
+    // })
+      // if(event){
+
+        this.noticiasService.categoriaPage = this.categorias[this.indiceCategoria].page++;
+        this.cargarNoticias(categoria, event);
+      // }
   }
   ver() {
     console.log(this.categorias);
