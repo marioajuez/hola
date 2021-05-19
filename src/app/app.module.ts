@@ -11,7 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
-import { InterceptorService } from './providers/interceptor.service';
+
 
 
 @NgModule({
@@ -35,8 +35,7 @@ import { InterceptorService } from './providers/interceptor.service';
     }),
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
 })

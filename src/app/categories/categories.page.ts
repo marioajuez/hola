@@ -3,9 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, IonSlides } from '@ionic/angular';
 import { Article } from '../interfaces/noticias.interface';
 import { NoticiasService } from '../providers/noticias.service';
-import { Router } from '@angular/router';
 import { SuperTabs } from '@ionic-super-tabs/angular';
-import { LoaderService } from '../providers/loader.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -13,18 +12,19 @@ import { LoaderService } from '../providers/loader.service';
   styleUrls: ['./categories.page.scss'],
 })
 export class CategoriesPage implements OnInit {
-  categoriaPage = this.noticiasService.categoriaPage;
 
+  indiceCategoria = 0;
+  categoriaPage = 179;
   categorias = [
     // { name: 'business', data: [], active: true, page: this.categoriaPage },
     // { name: 'sports', data: [], active: false, page: this.categoriaPage },
     // { name: 'general', data: [], active: false, page: this.categoriaPage },
-    { name: 'regional', data: [], active: true, page: this.categoriaPage},
-    { name: 'technology', data: [], active: false, page: 177},
-    { name: 'lifestyle', data: [], active: false, page: 178 },
-    { name: 'business', data: [], active: false, page: this.categoriaPage },
-    { name: 'general', data: [], active: false, page: 178},
-    { name: 'programming', data: [], active: false, page: this.categoriaPage },
+    { name: 'regional', data: [], active: true, page: this.categoriaPage, spinnerAsync :new BehaviorSubject<boolean>(true) },
+    { name: 'technology', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
+    { name: 'lifestyle', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true) },
+    { name: 'business', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true) },
+    { name: 'GENERAL', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
+    { name: 'programming', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
     // { name: 'science', data: [], active: false, page: this.categoriaPage },
     // {
     //   name: 'entertainment',
@@ -72,11 +72,10 @@ export class CategoriesPage implements OnInit {
     // { name: 'funny',data: [], active: false, page: this.categoriaPage}
   ];
 
-  indiceCategoria = 0;
+ 
 
   constructor(
     public noticiasService: NoticiasService,
-    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -87,79 +86,48 @@ export class CategoriesPage implements OnInit {
 
     this.indiceCategoria = event.detail.index;
 
-
-    this.categorias.forEach ( (element, index) =>{
-
-      if(element.active == false && index == event.detail.index){
-        this.cargarNoticias(element.name);
-        element.active = true
-      }
-    })
-
-    // if (this.categorias[event.detail.index].active == false) {
-    //     this.categorias[event.detail.index].active = true;
-    //     this.cargarNoticias(this.categorias[event.detail.index].name);
-    // }
+    if (this.categorias[event.detail.index].active == false) {
+        this.categorias[event.detail.index].active = true;
+        this.cargarNoticias(this.categorias[event.detail.index].name);
+    }
   }
 
   cargarNoticias(categoria?, event?) {
      
-    this.noticiasService.getCategorias(categoria,this.indiceCategoria, this.categorias[this.indiceCategoria].page ).subscribe(
-    resp => {
-      try {
-        this.categorias.forEach( element =>{
+    this.noticiasService.getTopHeadlinesCategoria(
+      categoria,
+      this.categorias[this.indiceCategoria].page,
+      this.categorias[this.indiceCategoria].spinnerAsync
+       ).subscribe(
+      resp => {
+        try {
+          this.categorias.forEach( element =>{
 
-          if(element.name == categoria){
+            if(element.name == categoria){
 
-          if (element.page+1 > 180 || resp.news.length == 0 && element.data.length != 0){
-                 event.target.disabled = true;
+                if (element.page+1 > 180 || resp.news.length == 0 && element.data.length != 0){
+                      event.target.disabled = true;
+                }
+            
+            element.data.push(...resp.news);
+            if (event) {
+                event.target.complete();
+            }
           }
-          
-
-
-          element.data.push(...resp.news);
-          if (event) {
-              event.target.complete();
-          }
+        })
+        } catch (err) {
+          console.error(err);
         }
-      })
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    error =>{
-        console.log(error ,"There was an error in receiving data from server!', 'OK', 'error");
-      }
-    )
-    
+      },
+      error =>{
+          console.log(error ,"There was an error in receiving data from server!', 'OK', 'error");
+        }
+      )
   }
 
   loadData(event?, categoria?) {
-
-    // this.categorias.forEach( element =>{
-
-    //   if(element.name == categoria){
-    //     this.noticiasService.categoriaPage = element.page++;
-    //     this.cargarNoticias(element.name, event);
-    //   }
-    // })
-    // console.log(categoria);
-
-    // this.noticiasService.categoriaPage = 0;
-    // this.categorias.forEach( (element,index) =>{
-
-    //   if(element.name == categoria && index == this.indiceCategoria){
-    //     // element.page++;
-    //     this.noticiasService.categoriaPage = element.page++;
-    //     this.cargarNoticias(element.name, event);
-        
-    //   }
-    // })
-      // if(event){
-
-        this.noticiasService.categoriaPage = this.categorias[this.indiceCategoria].page++;
-        this.cargarNoticias(categoria, event);
-      // }
+      this.categorias[this.indiceCategoria].page++;
+      this.cargarNoticias(categoria, event);
   }
   ver() {
     console.log(this.categorias);

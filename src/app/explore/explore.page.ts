@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { NoticiasService } from '../providers/noticias.service';
 
 import { Article } from '../interfaces/noticias.interface';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Component({
   selector: 'app-explore',
@@ -10,50 +12,54 @@ import { Article } from '../interfaces/noticias.interface';
 })
 export class ExplorePage implements OnInit {
 
-  private noticias: Article[] = [];
+  public noticias = [];
+  public page = 179
+  public spinnerAsync = new BehaviorSubject<boolean>(true)
 
   constructor(private noticiasService: NoticiasService) {}
 
-
-  ngOnInit() {
- 
+  ngOnInit() { 
+    // "urlToImage": "https://cdn.cnn.com/cnnnext/dam/assets/210423011220-07-north-carolina-shooting-0422-super-tease.jpg",
     this.cargarNoticias();
-  }
- 
-  
-  loadData(event) {
-    this.cargarNoticias(event);
   }
 
   cargarNoticias(event?, categoria?) {
 
-    const resp = this.noticiasService.getNoticias3();
+    // let resp = this.noticiasService.getNoticias3();
+  
+    // this.noticias.push(...resp.articles)
 
+    
 
-    console.log(resp);
+    this.noticiasService.getTopHeadlines(this.page, this.spinnerAsync).subscribe(
+      resp => {
+        try{
 
+         
 
+          // console.log(resp.news);
+          if (this.page+1 > 180 || resp.news.length == 0 && this.noticias.length != 0){
+                event.target.disabled = true;
+          }
 
-    // this.noticiasService.getNoticias2().subscribe((resp) => {
-    //   // let resp = this.noticiasService.getNoticias3();
-    //   // console.log(resp.articles.length);
+          this.noticias.push(...resp.news)
 
-    //   if (resp.articles.length === 0) event.target.disabled = true;
+          if (event) {
+              event.target.complete();
+          }
 
-
-    //   this.noticias.push(...resp.articles);
-
-    //   // // this.noticias.forEach((element) => {
-    //   // //   element.author = element.url.split('/www.')[1].split('/')[0];
-    //   // // });
-
-    //   this.noticiasScroll = this.noticias
-
-    //   // for (let i = this.indice; i < this.indice2; i++)
-    //   //   this.noticiasScroll.push(this.noticias[i]);
-
-    //   if (event) event.target.complete();
-    // });
+        }catch (err) {
+          console.error(err);
+        }
+      },
+      error =>{
+        console.log(error ,"There was an error in receiving data from server!', 'OK', 'error");
+      })
   }
+  
+  loadData(event?, categoria?) {
+    this.page++;
+    this.cargarNoticias(event);
+}
 
 }

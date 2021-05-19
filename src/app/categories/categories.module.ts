@@ -9,8 +9,8 @@ import { CategoriesPageRoutingModule } from './categories-routing.module';
 import { CategoriesPage } from './categories.page';
 import { ComponentsModule } from '../components/components.module';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from '../providers/interceptor.service';
+
+
 
 @NgModule({
   imports: [
@@ -22,8 +22,6 @@ import { InterceptorService } from '../providers/interceptor.service';
     SuperTabsModule
     ],
   declarations: [CategoriesPage],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
-  ],
+  providers: [],
 })
 export class CategoriesPageModule {}

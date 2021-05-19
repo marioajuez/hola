@@ -3,12 +3,23 @@
 <ion-content color="dark">
 
 
-  <!-- <ionic-tab-slider [tabs]="tabs"></ionic-tab-slider> -->
+    <div *ngIf="spinnerAsync | async" class="content-center">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>      
+    <div class="content-center" *ngIf="!(spinnerAsync | async) && noticias.length == 0">
+      <ion-icon name="sad" class="ion-padding-vertical"></ion-icon>
+      <ion-text class="ion-text-center">En el momento, no se encontraron noticias en esta categoria</ion-text>
+    </div> 
 
-  <!-- <app-noticias [noticias] = "noticiasScroll"></app-noticias>
 
-  <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+    <ng-container *ngIf="!(spinnerAsync | async) && noticias.length != 0">
+      <app-noticias [noticias] = "noticias"></app-noticias>
+
+
+      <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="crescent">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ng-container>
+
 </ion-content>

@@ -3,6 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  apikey: '1reP0_nL4m0SAJV9QO-2Wh1U-LGaQMwt3zKhhPLXI705NlND',
+  apiUrl: 'https://api.currentsapi.services/v1/latest-news',
   production: false
 };
 
