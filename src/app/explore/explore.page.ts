@@ -5,6 +5,8 @@ import { Article } from '../interfaces/noticias.interface';
 import { BehaviorSubject } from 'rxjs';
 
 
+
+
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -12,32 +14,24 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ExplorePage implements OnInit {
 
+  
   public noticias = [];
-  public page = 179
+  public page = 1
   public spinnerAsync = new BehaviorSubject<boolean>(true)
 
   constructor(private noticiasService: NoticiasService) {}
 
   ngOnInit() { 
-    // "urlToImage": "https://cdn.cnn.com/cnnnext/dam/assets/210423011220-07-north-carolina-shooting-0422-super-tease.jpg",
+
     this.cargarNoticias();
   }
 
   cargarNoticias(event?, categoria?) {
 
-    // let resp = this.noticiasService.getNoticias3();
-  
-    // this.noticias.push(...resp.articles)
-
-    
-
     this.noticiasService.getTopHeadlines(this.page, this.spinnerAsync).subscribe(
       resp => {
         try{
 
-         
-
-          // console.log(resp.news);
           if (this.page+1 > 180 || resp.news.length == 0 && this.noticias.length != 0){
                 event.target.disabled = true;
           }

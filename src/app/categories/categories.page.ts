@@ -1,10 +1,12 @@
-/* eslint-disable eqeqeq */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, IonSlides } from '@ionic/angular';
+
+import { BehaviorSubject } from 'rxjs';
+
 import { Article } from '../interfaces/noticias.interface';
 import { NoticiasService } from '../providers/noticias.service';
+
 import { SuperTabs } from '@ionic-super-tabs/angular';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -14,7 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 export class CategoriesPage implements OnInit {
 
   indiceCategoria = 0;
-  categoriaPage = 179;
+  categoriaPage = 1;
   categorias = [
     // { name: 'business', data: [], active: true, page: this.categoriaPage },
     // { name: 'sports', data: [], active: false, page: this.categoriaPage },
@@ -23,7 +25,7 @@ export class CategoriesPage implements OnInit {
     { name: 'technology', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
     { name: 'lifestyle', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true) },
     { name: 'business', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true) },
-    { name: 'GENERAL', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
+    { name: 'general', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
     { name: 'programming', data: [], active: false, page: this.categoriaPage,spinnerAsync: new BehaviorSubject<boolean>(true)},
     // { name: 'science', data: [], active: false, page: this.categoriaPage },
     // {
@@ -76,7 +78,14 @@ export class CategoriesPage implements OnInit {
 
   constructor(
     public noticiasService: NoticiasService,
-  ) {}
+  ) {
+    // this.categorias.forEach( element =>{
+
+    //     console.log(element.name)
+    //     element.name = element.name.toUpperCase();
+    //     console.log(element.name)
+    // })
+  }
 
   ngOnInit() {
     this.cargarNoticias(this.categorias[0].name);

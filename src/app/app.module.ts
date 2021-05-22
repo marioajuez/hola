@@ -10,16 +10,25 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
+
+
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+// import { IonicStorageModule } from '@ionic/storage';
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   entryComponents: [],
   imports: [
 
+    LazyLoadImageModule,
+
     SuperTabsModule.forRoot(),
+    // IonicStorageModule.forRoot(),
     // services
     HttpClientModule,
     ComponentsModule,

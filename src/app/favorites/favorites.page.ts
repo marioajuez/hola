@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalService } from 'src/app/providers/data-local.service';
 
 @Component({
   selector: 'app-favorites',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoritesPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dataLocalService: DataLocalService
+  ) { 
+    
+  }
 
   ngOnInit() {
   }

@@ -40,7 +40,9 @@ export class NoticiasService {
 
   public getTopHeadlines(pageNew, spinner?:any)
   {
-      return this.ejecutarQuery<RespuestaHeadLines>(`&page_number=${pageNew}&country=co`, spinner);
+    // return this.ejecutarQuery<RespuestaHeadLines>(`&page_number=${pageNew}&country=co`, spinner);
+
+    return this.ejecutarQuery<RespuestaHeadLines>(`&page_number=${pageNew}`, spinner);
   }
 
   public getTopHeadlinesCategoria(categoria: string, categoriaPage?, categoriaSpinner?:any){

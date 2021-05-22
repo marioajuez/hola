@@ -4,8 +4,7 @@
 </ion-header>
 
 
-
-<super-tabs #tabs (tabChange) = "onTabSelect($event)" 
+<super-tabs (tabChange) = "onTabSelect($event)" 
 [config]="{ lazyLoad: true, unloadWhenInvisible: true,  debug: true, nativeSmoothScroll: true }">
  
   <super-tabs-toolbar slot="top" scrollable>

@@ -3,13 +3,26 @@ ion-col{
   padding-top: 50px
 }
 
-
-ion-img{
-height: 10rem;
-object-fit: cover;
-min-height: 10rem;
+ion-img, img{
+  transition: opacity 8s;
+  opacity: 0;
+  height: 10rem;
+  width: 100%;
+  object-fit: cover !important;
+  min-height: 10rem;
+}
+img.ng-lazyloaded {
+  opacity: 1;
 }
 
+
+// ion-card-header {
+//       display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     height: 100%;
+//     flex-direction: column;
+// }
 
 ion-card{
 padding-bottom: 30px;
@@ -38,8 +51,10 @@ $xl:1200px;
 
 @media only screen and (max-width: $sm) {
 
-  ion-img {
-    height: auto !important;
+  ion-img, img {
+    // height: auto !important;
+    height: 14rem;
+    min-height: 14rem;
   }
   ion-card{
     padding-bottom: 0;
@@ -53,10 +68,7 @@ $xl:1200px;
   ion-col{
     padding-top: 0 !important
   }
-
 }
-
-
 
 ion-text{
   display: -webkit-box;
@@ -79,34 +91,5 @@ ion-text{
 }
 
 
-.fade-in {
-  animation: fadeIn ease 10s;
-  -webkit-animation: fadeIn ease 10s;
-  -moz-animation: fadeIn ease 10s;
-  -o-animation: fadeIn ease 10s;
-  -ms-animation: fadeIn ease 10s;
-}
-@keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
 
-@-moz-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
 
-@-webkit-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-o-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-ms-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
