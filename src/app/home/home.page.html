@@ -1,5 +1,7 @@
 <ion-tabs>
+
   <ion-tab-bar slot="bottom" color="dark">
+
      <ion-tab-button (click)="change(tab.path)" *ngFor = "let tab of tabs" [tab]="tab.path">
       <ion-icon [icon]= "tab.icon"></ion-icon>
       <ion-label>{{tab.description}}</ion-label>

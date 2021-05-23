@@ -14,11 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ExplorePage implements OnInit {
 
-
-  errorMensaje = {
-    429: "Se ha excedido el numero de solicitudes por hoy"
-  }
-
   
   public noticias = [];
   public page = 1
@@ -52,27 +47,13 @@ export class ExplorePage implements OnInit {
         }
       },
       error =>{
-        console.log(this.errorMensaje[error.status]);
-  
-        // console.log(error ,"There was an error in receiving data from server!', 'OK', 'error");
+        console.log(error ,"There was an error in receiving data from server!', 'OK', 'error");
       })
   }
   
   loadData(event?, categoria?) {
     this.page++;
     this.cargarNoticias(event);
-}
-
-refreshNews(event){
-
-  this.page = 1;
-  this.noticiasService.getTopHeadlines(this.page, this.spinnerAsync).subscribe( 
-    resp =>{
-      this.noticias = []
-      this.noticias.push(...resp.news)
-      event.target.complete();
-    }
-  )
 }
 
 }
