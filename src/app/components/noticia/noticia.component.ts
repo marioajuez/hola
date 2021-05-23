@@ -7,8 +7,10 @@ import { ActionSheetController,IonImg } from '@ionic/angular';
 
 import { ToastController } from '@ionic/angular';
 import { Article } from '../../interfaces/noticias.interface';
-import { Directive, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+
 import { DataLocalService } from 'src/app/providers/data-local.service';
+import { Browser } from '@capacitor/browser';
+import { Share } from '@capacitor/share';
 
 
 
@@ -27,9 +29,7 @@ export class NoticiaComponent{
   errorImage = "assets/news-default.jpg"
 
   constructor(
-    // private iab: InAppBrowser,
     private actionSheetController: ActionSheetController,
-    // private socialSharing: SocialSharing,
     private dataLocalService: DataLocalService
     ){
     }
@@ -59,8 +59,8 @@ export class NoticiaComponent{
         handler: () => {
           console.log('Favorite clicked');
 
-          console.log(this.noticia);
-          // this.dataLocalService.guardarNoticia(this.noticia);
+          // console.log(this.noticia);
+          this.dataLocalService.guardarNoticia(this.noticia);
         }
       };
     }
@@ -72,13 +72,7 @@ export class NoticiaComponent{
         icon: 'share-social',
         handler: () => {
           console.log('Share clicked');
-        //   this.socialSharing.share(
-        //     this.noticia.title,
-        //     this.noticia.source.name,
-        //     '',
-        //     this.noticia.url
-        //   // );
-        // }
+          this.shareNews()
       }},
       guardarBorrarBtn,
       {
@@ -92,5 +86,18 @@ export class NoticiaComponent{
     ]
     });
     await actionSheet.present();
+  }
+
+  async openNews(){
+    await Browser.open({ url: this.noticia.url });
+  }
+
+  async shareNews(){
+    await Share.share({
+      title: this.noticia.title,
+      text: this.noticia.description,
+      url:  this.noticia.url,
+      dialogTitle: 'Comparte esta noticia',
+    });
   }
 }

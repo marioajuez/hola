@@ -1,5 +1,5 @@
 <ion-card color="dark">
-  <ion-card-header class="ion-no-padding">
+  <ion-card-header class="ion-no-padding" (click)="openNews()">
     <img [lazyLoad]="noticia.image" [errorImage]="errorImage"/>
     <ion-card-title class="ion-padding-horizontal">
       {{noticia.title}}

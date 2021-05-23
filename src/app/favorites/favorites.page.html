@@ -2,12 +2,22 @@
 <ion-content color="dark">
 
 
-    <ng-container>
-        <div class="content-center">
-            <ion-icon name="heart-dislike"></ion-icon>
-            <p>No hay favoritos</p>
-        </div>
-    </ng-container>
+
+    <!-- <div class="content-center">
+        <ion-icon name="heart-dislike"></ion-icon>
+        <p>No hay favoritos</p>
+    </div> -->
+
+    <app-noticias *ngIf ="dataLocalService.noticias.length > 0"
+        [noticias] = "dataLocalService.noticias"
+        [enFavoritos] = "true">
+    </app-noticias>
+
+    <div class="content-center" *ngIf =" dataLocalService.noticias.length === 0">
+        <ion-icon name="heart-dislike"></ion-icon>
+        <p>No hay favoritos</p>
+    </div> 
+
 </ion-content>
 
   
