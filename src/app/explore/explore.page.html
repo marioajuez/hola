@@ -1,11 +1,20 @@
 <app-header title="Colombia News"></app-header>
 
-<ion-content color="dark">
+<ion-content color="dark" class ="ion-no-padding">
 
+  <ion-refresher slot="fixed" (ionRefresh)="refreshNews($event)" >
+    <ion-refresher-content color="dark"
+    refreshingSpinner="crescent"
+    ></ion-refresher-content>
+  </ion-refresher>
+
+
+    <!-- "bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined -->
 
     <div *ngIf="spinnerAsync | async" class="content-center">
       <ion-spinner name="crescent"></ion-spinner>
-    </div>      
+    </div>
+
     <div class="content-center" *ngIf="!(spinnerAsync | async) && noticias.length == 0">
       <ion-icon name="sad" class="ion-padding-vertical"></ion-icon>
       <ion-text class="ion-text-center">En el momento, no se encontraron noticias en esta categoria</ion-text>
@@ -14,7 +23,6 @@
 
     <ng-container *ngIf="!(spinnerAsync | async) && noticias.length != 0">
       <app-noticias [noticias] = "noticias"></app-noticias>
-
 
       <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content loadingSpinner="crescent">

@@ -15,10 +15,9 @@
     </super-tab-button>
 
   </super-tabs-toolbar>
-  <super-tabs-container  	swipe-enabled ="true">
+  <super-tabs-container  swipe-enabled ="true">
     <super-tab *ngFor="let categoria of categorias; let i=index">
-  
-      <ion-content class="ion-padding" color="dark">
+      <ion-content color="dark">
         <div *ngIf="categoria.spinnerAsync | async" class="content-center">
           <ion-spinner name="crescent"></ion-spinner>
         </div>

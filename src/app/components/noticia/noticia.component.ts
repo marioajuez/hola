@@ -60,7 +60,7 @@ export class NoticiaComponent{
           console.log('Favorite clicked');
 
           console.log(this.noticia);
-          // this.dataLocalService.guardarNoticia(this.noticia);
+          this.dataLocalService.guardarNoticia(this.noticia);
         }
       };
     }
@@ -72,6 +72,7 @@ export class NoticiaComponent{
         icon: 'share-social',
         handler: () => {
           console.log('Share clicked');
+          this.shareNew();
         //   this.socialSharing.share(
         //     this.noticia.title,
         //     this.noticia.source.name,
@@ -93,4 +94,23 @@ export class NoticiaComponent{
     });
     await actionSheet.present();
   }
-}
+
+  shareNew(){
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'WebShare API Demo',
+        url: 'https://codepen.io/ayoisaiah/pen/YbNazJ'
+      }).then(() => {
+        console.log('Thanks for sharing!');
+      })
+      .catch(console.error);
+    } else {
+      // fallback
+    }
+  }
+
+  }
+
+
+

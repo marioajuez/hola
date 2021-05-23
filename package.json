@@ -22,6 +22,7 @@
     "@angular/service-worker": "~11.2.0",
     "@ionic-super-tabs/angular": "^7.0.8",
     "@ionic/angular": "^5.5.2",
+    "@ionic/storage-angular": "^3.0.6",
     "ng-lazyload-image": "^9.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

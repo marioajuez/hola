@@ -14,7 +14,11 @@ import { ComponentsModule } from './components/components.module';
 
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
-// import { IonicStorageModule } from '@ionic/storage';
+
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { Drivers } from '@ionic/storage';
+
+
 
 
 
@@ -28,7 +32,11 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     LazyLoadImageModule,
 
     SuperTabsModule.forRoot(),
-    // IonicStorageModule.forRoot(),
+
+    IonicStorageModule.forRoot({
+      driverOrder: [Drivers.SecureStorage, Drivers.IndexedDB, Drivers.LocalStorage]
+    }),
+ 
     // services
     HttpClientModule,
     ComponentsModule,
