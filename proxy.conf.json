@@ -1,7 +1,0 @@
-{
-    "/api/*": {
-        "target": "http://api.currentsapi.services",
-        "secure": false,
-        "logLevel": "debug"
-    }
-}
